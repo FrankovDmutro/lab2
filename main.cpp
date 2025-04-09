@@ -1,30 +1,52 @@
-#include "triangle.h"
+#include <iostream>
+#include "geometry.h"
+
+using namespace std;
 
 int main() {
-    Triangle t;
-    std::cout << "Введіть координати трикутника (A, B, C): ";
-    std::cin >> t.A.x >> t.A.y >> t.B.x >> t.B.y >> t.C.x >> t.C.y;
 
-    if (t.isDegenerate()) {
-        std::cout << "Це вироджений трикутник (точки лежать на одній прямій)." << std::endl;
-        return 1;
-    }
+    Triangle t{{0, 0}, {0, 0}, {0, 0}};
+    Point p{0, 0};
 
-    int numPoints;
-    std::cout << "Введіть кількість точок для перевірки: ";
-    std::cin >> numPoints;
+    //Ввід точок
+    cout << "Введіть точки трикутника:" << endl;
 
-    for (int i = 0; i < numPoints; i++) {
-        Point p;
-        std::cout << "Введіть координати точки: ";
-        std::cin >> p.x >> p.y;
+    cout << "A:";
+    cin >> t.A;
 
-        if (t.containsUsingVectors(p)) {
-            std::cout << "Точка (" << p.x << ", " << p.y << ") знаходиться всередині трикутника." << std::endl;
-        } else {
-            std::cout << "Точка (" << p.x << ", " << p.y << ") знаходиться ЗОВНІ трикутника." << std::endl;
+    cout << "B:";
+    cin >> t.B;
+
+    cout << "C:";
+    cin >> t.C;
+
+    bool choice = 0;
+    while (true) {
+        
+cout << "Введіть координати точки:" << 
+endl;
+        
+cin >> p;
+    
+        if (t.contains(p)) {
+            
+    cout << "Точка належить трикутнику" << 
+    endl;
+        } 
+        else {
+            
+    cout << "Точка не належить трикутнику" << 
+    endl;
+        }
+        
+cout << "Повторити операцію?(0 або 1)" << 
+endl;
+        
+cin >> choice;
+        if (!choice){
+            break;
         }
     }
-
     return 0;
 }
+    
