@@ -22,27 +22,24 @@ int main() {
 
     bool choice = 0;
     while (true) {
-        
-cout << "Введіть координати точки:" << 
-endl;
-        
-cin >> p;
     
+        if (!isExist(t)) {
+            cout << "Трикутник не існує" << endl;
+            return 1;
+        }
+    
+        cout << "Введіть координати точки:";
+        cin >> p;
         if (t.contains(p)) {
-            
-    cout << "Точка належить трикутнику" << 
-    endl;
+            cout << "Точка належить трикутнику" << endl;
         } 
-        else {
-            
-    cout << "Точка не належить трикутнику" << 
-    endl;
+        else {        
+            cout << "Точка не належить трикутнику" << endl;
         }
         
-cout << "Повторити операцію?(0 або 1)" << 
-endl;
+        cout << "Повторити операцію?(0 або 1):";
         
-cin >> choice;
+        cin >> choice;
         if (!choice){
             break;
         }

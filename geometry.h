@@ -16,5 +16,7 @@ struct Triangle {
     bool contains(const Point& P) const;
 };
 
+double isExist(const Triangle& t);
+
 double distance(const Point& p1, const Point& p2);
 double heronArea(const Triangle& t);

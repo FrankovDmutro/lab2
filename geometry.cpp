@@ -1,5 +1,13 @@
 #include "geometry.h"
 
+double isExist(const Triangle& t){
+    double a = distance(t.A, t.B);
+    double b = distance(t.B, t.C);
+    double c = distance(t.C, t.A);
+
+    return (a + b > c && a + c > b && b + c > a);
+}
+
 double distance(const Point& p1, const Point& p2) {
     return sqrt(std::pow(p2.x - p1.x, 2) + std::pow(p2.y - p1.y, 2));
 }
@@ -24,7 +32,7 @@ bool Triangle::contains(const Point& P) const {
     double S_main = area();
     double S_sum = T1.area() + T2.area() + T3.area();
 
-    return fabs(S_main - S_sum) < 1e-9;
+    return fabs(S_main - S_sum) < 1e-9; 
 }
 
 std::istream& operator>>(std::istream& is, Point& p) {
