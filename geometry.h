@@ -1,5 +1,8 @@
 #pragma once
 #include <iostream>
+#include <cmath>
+#include <cstdlib>
+#include <limits>
 
 struct Point {
     double x, y;

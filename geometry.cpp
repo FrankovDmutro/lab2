@@ -1,13 +1,10 @@
 #include "geometry.h"
-#include <cmath>
-#include <cstdlib>
-#include <limits>
 
 // ===== Метод зчитування координат точки =====
 // Виводить підказку та читає точку через operator>>, з повторним вводом при помилці
 void Point::read() {
     std::cout << "Введіть координати точки (x, y): ";
-    while (!(std::cin >> *this)) {
+    while (!(std::cin >> *this)) {  
         std::cin.clear();
         std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
         std::cerr << "Невірний ввід. Спробуйте ще раз: ";
