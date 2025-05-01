@@ -97,6 +97,23 @@ double area(const Point& A, const Point& B, const Point& C) {
     );
 }
 
+bool onSegment(const Point& U, const Point& V, const Point& P) {
+    const double eps = 1e-9;
+    
+    //Cпочатку колінеарність (площа U,V,P ≈ 0)
+    double cross = (V.x - U.x)*(P.y - U.y) - (V.y - U.y)*(P.x - U.x);
+    if (std::abs(cross) > eps) 
+        return false;
+
+    // 2) перевіряємо, що P між U і V за координатами
+    if (P.x < std::min(U.x, V.x) - eps || P.x > std::max(U.x, V.x) + eps) 
+        return false;
+    if (P.y < std::min(U.y, V.y) - eps || P.y > std::max(U.y, V.y) + eps) 
+        return false;
+
+    return true;
+}
+
 // ===== Перевірка приналежності точки методом Герона =====
 void methodByHeron(const Triangle& t, const Point& p) {
     if (!t.existsBySides()) {
@@ -104,23 +121,23 @@ void methodByHeron(const Triangle& t, const Point& p) {
         return;
     }
 
-    Triangle T1{t.A, t.B, p};
-    Triangle T2{t.B, t.C, p};
-    Triangle T3{t.C, t.A, p};
-
-    double mainArea = t.areaHeron();
-    double a1 = T1.areaHeron();
-    double a2 = T2.areaHeron();
-    double a3 = T3.areaHeron();
-    const double eps = 1e-9;
-
-    if (a1 < eps || a2 < eps || a3 < eps) {
+    // 1. Перевірка “на ребрі”
+    if ( onSegment(t.A, t.B, p) ||
+         onSegment(t.B, t.C, p) ||
+         onSegment(t.C, t.A, p) )
+    {
         std::cout << "Точка лежить на межі трикутника (метод Герона).\n";
         return;
     }
 
-    double sumAreas = a1 + a2 + a3;
-    if (std::abs(mainArea - sumAreas) < eps)
+    // 2. Обчислюємо площі за Героном
+    double mainArea = t.areaHeron();
+    Triangle T1{t.A, t.B, p}, T2{t.B, t.C, p}, T3{t.C, t.A, p};
+    double a1 = T1.areaHeron(), a2 = T2.areaHeron(), a3 = T3.areaHeron();
+    const double eps = 1e-9;
+
+    // 3. Всередині або зовні
+    if (std::abs(mainArea - (a1 + a2 + a3)) < eps)
         std::cout << "Точка належить трикутнику (метод Герона).\n";
     else
         std::cout << "Точка не належить трикутнику (метод Герона).\n";
@@ -133,19 +150,25 @@ void methodByAreaFormula(const Triangle& t, const Point& p) {
         return;
     }
 
-    double totalArea = t.areaDeterminant();
-    double a1 = area(p, t.B, t.C);
-    double a2 = area(t.A, p, t.C);
-    double a3 = area(t.A, t.B, p);
-    const double eps = 1e-9;
-
-    if (a1 < eps || a2 < eps || a3 < eps) {
+    // 1. Перевірка “на ребрі”
+    if ( onSegment(t.A, t.B, p) ||
+         onSegment(t.B, t.C, p) ||
+         onSegment(t.C, t.A, p) )
+    {
         std::cout << "Точка лежить на межі трикутника (метод площ).\n";
         return;
     }
 
+    // 2. Обчислюємо детермінантні площі
+    double totalArea = t.areaDeterminant();
+    double a1 = area(p, t.B, t.C), a2 = area(t.A, p, t.C), a3 = area(t.A, t.B, p);
+    const double eps = 1e-9;
+
+    // 3. Всередині або зовні
     if (std::abs(totalArea - (a1 + a2 + a3)) < eps)
         std::cout << "Точка всередині трикутника (метод площ).\n";
     else
         std::cout << "Точка ззовні трикутника (метод площ).\n";
 }
+
+

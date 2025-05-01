@@ -29,6 +29,7 @@ struct Triangle {
 // Загальні утиліти
 double distance(const Point& p1, const Point& p2);
 double area(const Point& A, const Point& B, const Point& C);
+bool onSegment(const Point& U, const Point& V, const Point& P);
 
 // Методи перевірки точки
 void methodByHeron(const Triangle& t, const Point& p);
