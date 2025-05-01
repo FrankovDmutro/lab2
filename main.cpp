@@ -11,14 +11,14 @@ int main() {
 
     // Перевірка на існування трикутника
     if (!t.exists()) {
-        cout << "Трикутник не існує.\n";
-        return 1;
+        cout << "Трикутник вироджений .\n";
+
     }
 
     // Читаємо точку
     p.read();
 
-    cout << "==========================" << endl;
+    
 
     bool again = true;
     int chooseMethod, chooseOperation;

@@ -106,7 +106,7 @@ bool onSegment(const Point& U, const Point& V, const Point& P) {
         return false;
 
     // 2) перевіряємо, що P між U і V за координатами
-    if (P.x < std::min(U.x, V.x) - eps || P.x > std::max(U.x, V.x) + eps) 
+    if (P.x < std::min(U.x, V.x) - eps || P.x > std::max(U.x, V.x) + eps)   //std::min це
         return false;
     if (P.y < std::min(U.y, V.y) - eps || P.y > std::max(U.y, V.y) + eps) 
         return false;
@@ -116,11 +116,6 @@ bool onSegment(const Point& U, const Point& V, const Point& P) {
 
 // ===== Перевірка приналежності точки методом Герона =====
 void methodByHeron(const Triangle& t, const Point& p) {
-    if (!t.existsBySides()) {
-        std::cout << "Трикутник не існує за сторонами.\n";
-        return;
-    }
-
     // 1. Перевірка “на ребрі”
     if ( onSegment(t.A, t.B, p) ||
          onSegment(t.B, t.C, p) ||
@@ -145,24 +140,25 @@ void methodByHeron(const Triangle& t, const Point& p) {
 
 // ===== Перевірка приналежності точки через площу (детермінант) =====
 void methodByAreaFormula(const Triangle& t, const Point& p) {
-    if (!t.existsByArea()) {
-        std::cout << "Трикутник вироджений (площа ≈ 0).\n";
-        return;
-    }
-
+    const double eps = 1e-9;
     // 1. Перевірка “на ребрі”
     if ( onSegment(t.A, t.B, p) ||
          onSegment(t.B, t.C, p) ||
          onSegment(t.C, t.A, p) )
     {
-        std::cout << "Точка лежить на межі трикутника (метод площ).\n";
+        std::cout << "Точка лежить на трикутнику(метод площ).\n";
         return;
     }
 
     // 2. Обчислюємо детермінантні площі
     double totalArea = t.areaDeterminant();
+    if (std::abs(totalArea) < eps) {
+        std::cout << "Точка не належить трикутинку (метод площ).\n";
+        return;
+    }
     double a1 = area(p, t.B, t.C), a2 = area(t.A, p, t.C), a3 = area(t.A, t.B, p);
-    const double eps = 1e-9;
+    
+
 
     // 3. Всередині або зовні
     if (std::abs(totalArea - (a1 + a2 + a3)) < eps)
