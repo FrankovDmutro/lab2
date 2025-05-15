@@ -1,0 +1,20 @@
+[
+  {
+    "arguments": [
+      "/usr/bin/g++",
+      "-c",
+      "main.cpp"
+    ],
+    "directory": "/home/kusli1/projects/oop/lab2final",
+    "file": "/home/kusli1/projects/oop/lab2final/main.cpp"
+  },
+  {
+    "arguments": [
+      "/usr/bin/g++",
+      "-c",
+      "geometry.cpp"
+    ],
+    "directory": "/home/kusli1/projects/oop/lab2final",
+    "file": "/home/kusli1/projects/oop/lab2final/geometry.cpp"
+  }
+]
